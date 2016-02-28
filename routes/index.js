@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 /* Start Tracking the number */
 router.get('/startTracking', function(req, res, next){
 
-    var contact = '+'+req.query.contact;
+    var contact = '+1'+req.query.contact;
     console.log('number is' + req.query.contact);
 
     //Send an SMS text message
@@ -50,7 +50,7 @@ router.get('/startTracking', function(req, res, next){
 
 /* Send a call to the number */
 router.get('/sendCall', function(req, res, next){
-    var contact = req.query.contact;
+    var contact = '+1'+req.query.contact;
     console.log('number is' + req.query.contact);
 
     //Place a phone call, and respond with TwiML instructions from the given URL
@@ -63,11 +63,12 @@ router.get('/sendCall', function(req, res, next){
 
         if(!err){
             console.log('no error');
+            res.send('Calling..');
         }
         else{
             // Printing the error object
             console.log(util.inspect(err, false, null));
-            console.log('error');
+            res.send('Failed calling '+ contact);
         }
         //executed when the call has been initiated.
         // console.log(responseData.from); // outputs "+14506667788"
