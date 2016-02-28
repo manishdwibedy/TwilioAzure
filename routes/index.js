@@ -24,7 +24,7 @@ router.get('/startTracking', function(req, res, next){
         to: contact, // Any number Twilio can deliver to
         from: twilioNumber, // A number you bought from Twilio and can use for outbound communication
         body: 'Person inside the boundary #SAFE', // body of the SMS message
-        StatusCallback: 'http://localhost:3000/twilio/messageStatus'
+        StatusCallback: 'http://fencetracking.azurewebsites.net/twilio/messageStatus'
 
     }, function(err, responseData) { //this function is executed when a response is received from Twilio
 
@@ -76,6 +76,15 @@ router.get('/sendCall', function(req, res, next){
 
     });
     res.send('Call Sent!')
+});
+/* Send a call to the number */
+router.get('/getCall', function(req, res, next){
+    client.incomingPhoneNumbers("PN2a0747eba6abf96b7e3c3ff0b4530f6e").update({
+        voiceUrl: "http://demo.twilio.com/docs/voice.xml",
+        smsUrl: "http://demo.twilio.com/docs/sms.xml"
+    }, function(err, number) {
+        console.log(number.voiceUrl);
+    });
 });
 
 module.exports = router;
