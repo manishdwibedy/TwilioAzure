@@ -37,12 +37,13 @@ router.get('/startTracking', function(req, res, next){
             console.log(responseData.from); // outputs "+14506667788"
             console.log(responseData.body); // outputs "word to your mother."
             messageSent = true;
-
+            res.send('Message Status : '+messageSent);
         }
         if(err){
             console.log(util.inspect(err, false, null));
+            res.send('Error : ' + util.inspect(err, false, null));
         }
-        res.send('Message Status : '+messageSent);
+
     });
 
 });
