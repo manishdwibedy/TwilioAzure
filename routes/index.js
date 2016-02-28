@@ -23,7 +23,8 @@ router.get('/startTracking', function(req, res, next){
     client.sendMessage({
         to: contact, // Any number Twilio can deliver to
         from: twilioNumber, // A number you bought from Twilio and can use for outbound communication
-        body: 'Person inside the boundary #SAFE' // body of the SMS message
+        body: 'Person inside the boundary #SAFE', // body of the SMS message
+        StatusCallback: 'asdas'
 
     }, function(err, responseData) { //this function is executed when a response is received from Twilio
 
