@@ -16,11 +16,12 @@ router.get('/', function(req, res, next) {
 /* Start Tracking the number */
 router.get('/startTracking', function(req, res, next){
 
+    var contact = req.query.contact;
     console.log('number is' + req.query.contact);
 
     //Send an SMS text message
     client.sendMessage({
-        to: userNumber, // Any number Twilio can deliver to
+        to: contact, // Any number Twilio can deliver to
         from: twilioNumber, // A number you bought from Twilio and can use for outbound communication
         body: 'Testing message' // body of the SMS message
 
@@ -42,9 +43,12 @@ router.get('/startTracking', function(req, res, next){
 
 /* Send a call to the number */
 router.get('/sendCall', function(req, res, next){
+    var contact = req.query.contact;
+    console.log('number is' + req.query.contact);
+
     //Place a phone call, and respond with TwiML instructions from the given URL
     client.makeCall({
-        to: userNumber, // Any number Twilio can deliver to
+        to: contact, // Any number Twilio can deliver to
         from: twilioNumber, // A number you bought from Twilio and can use for outbound communication
         url: 'http://www.example.com/twiml.php' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
@@ -56,7 +60,6 @@ router.get('/sendCall', function(req, res, next){
         else{
             // Printing the error object
             console.log(util.inspect(err, false, null));
-
             console.log('error');
         }
         //executed when the call has been initiated.
