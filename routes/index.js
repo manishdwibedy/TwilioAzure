@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 /* Start Tracking the number */
 router.get('/startTracking', function(req, res, next){
 
-    var contact = req.query.contact;
+    var contact = '+'+req.query.contact;
     console.log('number is' + req.query.contact);
 
     //Send an SMS text message
@@ -27,6 +27,7 @@ router.get('/startTracking', function(req, res, next){
 
     }, function(err, responseData) { //this function is executed when a response is received from Twilio
 
+        messageSent = false;
         if (!err) { // "err" is an error received during the request, if any
 
             // "responseData" is a JavaScript object containing data received from Twilio.
@@ -35,10 +36,15 @@ router.get('/startTracking', function(req, res, next){
 
             console.log(responseData.from); // outputs "+14506667788"
             console.log(responseData.body); // outputs "word to your mother."
+            messageSent = true;
 
         }
+        if(err){
+            console.log(util.inspect(err, false, null));
+        }
+        res.send('Message Status : '+messageSent);
     });
-    res.send('Done');
+
 });
 
 /* Send a call to the number */
