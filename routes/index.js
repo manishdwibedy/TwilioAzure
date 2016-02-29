@@ -58,7 +58,7 @@ router.get('/sendCall', function(req, res, next){
     client.makeCall({
         to: contact, // Any number Twilio can deliver to
         from: twilioNumber, // A number you bought from Twilio and can use for outbound communication
-        url: 'http://www.example.com/twiml.php' // A URL that produces an XML document (TwiML) which contains instructions for the call
+        url: 'https://demo.twilio.com/welcome/voice/' // A URL that produces an XML document (TwiML) which contains instructions for the call
 
     }, function(err, responseData) {
 
@@ -79,12 +79,21 @@ router.get('/sendCall', function(req, res, next){
 });
 /* Send a call to the number */
 router.get('/getCall', function(req, res, next){
-    client.incomingPhoneNumbers("PN2a0747eba6abf96b7e3c3ff0b4530f6e").update({
-        voiceUrl: "http://demo.twilio.com/docs/voice.xml",
-        smsUrl: "http://demo.twilio.com/docs/sms.xml"
-    }, function(err, number) {
-        console.log(number.voiceUrl);
-    });
+    var contact = '+1'+req.query.contact;
+    client.makeCall({
+            to: contact,
+            from: twilioNumber,
+            url: 'https://demo.twilio.com/welcome/voice/'
+        }, function(err, message) {
+            console.log(err);
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                res.send({
+                    message: 'Thank you! We will be calling you shortly.'
+                });
+            }
+        });
 });
 
 module.exports = router;
